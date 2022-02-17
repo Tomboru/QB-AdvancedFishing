@@ -111,220 +111,141 @@ AddEventHandler('fishing:catch', function(bait)
 	local weight = 2
 	local rnd = math.random(1,100)
 	local xPlayer = QBCore.Functions.GetPlayer(tonumber(source))
+	local worm = xPlayer.Functions.GetItemByName('worm')
 	local fish = xPlayer.Functions.GetItemByName('fish')
 	local stingray = xPlayer.Functions.GetItemByName('stingray')
-	local fish = xPlayer.Functions.GetItemByName('delphin')
-	local fish = xPlayer.Functions.GetItemByName('sharktiger')
-	local fish = xPlayer.Functions.GetItemByName('sharkhammer')
-	local fish = xPlayer.Functions.GetItemByName('killerwhale')
-	--[[if bait == "none" then
-			if rnd >= 70 then
-			TriggerClientEvent('fishing:message', source, "You are currently fishing without any equipped bait")
-			if  xPlayer.Functions.GetItemByName('fish').amount > 100 then
-					TriggerClientEvent('fishing:message', source, "~r~You cant hold more fish")
-				else
-					weight = math.random(2,4)
-					TriggerClientEvent('fishing:message', source, "You caught a ~y~fish~s~: ~g~~h~" .. weight .. "kg")
-					xPlayer.Functions.GetItemByName('fish', weight)
-					TriggerClientEvent('fish:spawnPed', source)
-				end
+	local delphin = xPlayer.Functions.GetItemByName('delphin')
+	local sharktiger = xPlayer.Functions.GetItemByName('sharktiger')
+	local sharkhammer = xPlayer.Functions.GetItemByName('sharkhammer')
+	local killerwhale = xPlayer.Functions.GetItemByName('killerwhale')
+	
+	if bait == "none" then
+		TriggerClientEvent('fishing:message', _source, "You are currently fishing without any equipped bait")
+		if rnd >= 90 then
+		if  fish.amount > 100 then
+				TriggerClientEvent('fishing:message', _source, "~r~You cant hold more fish")
 			else
-			TriggerClientEvent('fishing:message', source, "You are currently fishing without any equipped bait")
-				if xPlayer.Functions.GetItemByName('fish').amount > 100 then
-					TriggerClientEvent('fishing:message', source, "~r~You cant hold more fish")
-				else
-					weight = math.random(1,2)
-					TriggerClientEvent('fishing:message', source, "You caught a ~y~fish~s~: ~g~~h~" .. weight .. "kg")
-					xPlayer.Functions.AddItem('fish', weight)
-					TriggerClientEvent('fish:spawnPed', source)
-				end
+				weight = math.random(2,4)
+				TriggerClientEvent('fishing:message', _source, "You caught a ~y~fish~s~: ~g~~h~" .. weight .. "kg")
+				xPlayer.addInventoryItem('fish', weight)
+				TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['fish'], "add")
+				TriggerClientEvent('fish:spawnPed', _source)
 			end
-		end
-	else
-	if bait == "fish" then
-		if rnd >= 75 then
-			TriggerClientEvent('fishing:setbait', source, "none")
-			if stingray.amount > 10 then
-				TriggerClientEvent('fishing:message', source, "You cant hold more Stingrays")
-			else
-				weight = math.random(4,11)
-				TriggerClientEvent('fishing:message', source, "You caught a stingray: " .. weight .. "kg")
-				xPlayer.Functions.AddItem('stingray', weight)
-				TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['stingray'], "add")
-				TriggerClientEvent('stingray:spawnPed', source)
-			end
-
 		else
+				TriggerClientEvent('fishing:message', _source, "There was no fish")
+		end
+	end
+	
+	if bait == "worm" then
+		if rnd >= 75 then
+			TriggerClientEvent('fishing:setbait', _source, "none")
 			if fish.amount > 100 then
-				TriggerClientEvent('fishing:message', source, "~r~You cant hold more fish")
+				TriggerClientEvent('fishing:message', _source, "~r~You cant hold more fish")
 			else
 				weight = math.random(1,6)
-				TriggerClientEvent('fishing:message', source, "You caught a ~y~fish~s~: ~g~~h~" .. weight .. "kg")
-				xPlayer.Functions.AddItem('fish', weight)
+				TriggerClientEvent('fishing:message', _source, "You caught a ~y~fish~s~: ~g~~h~" .. weight .. "kg")
+				xPlayer.addInventoryItem('fish', weight)
 				TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['fish'], "add")
-				TriggerClientEvent('fish:spawnPed', source)
+				TriggerClientEvent('fish:spawnPed', _source)
 			end
+
+		else
+			TriggerClientEvent('fishing:setbait', _source, "none")
+			TriggerClientEvent('fishing:message', _source, "There was no fish")
 		end
-	else
+	end
+	if bait == "fish" then
+		if rnd >= 75 then
+			TriggerClientEvent('fishing:setbait', _source, "none")
+			if stingray.count > 10 then
+				TriggerClientEvent('fishing:message', _source, "~r~You cant hold more stingray")
+			else
+				weight = math.random(1,2)
+				TriggerClientEvent('fishing:message', _source, "You caught a stingray")
+				xPlayer.addInventoryItem('stingray', weight)
+				TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['stingray'], "add")
+				TriggerClientEvent('stingray:spawnPed', _source)
+			end
+
+		else
+			TriggerClientEvent('fishing:setbait', _source, "none")
+			TriggerClientEvent('fishing:message', _source, "There was no stingray")
+		end
+	end
 	if bait == "stingray" then
 		if rnd >= 78 then
-			if rnd >= 94 then
-				TriggerClientEvent('fishing:setbait', source, "none")
-				TriggerClientEvent('fishing:message', source, "It was huge and it broke your ~y~fishing rod!")
-				TriggerClientEvent('fishing:break', source)
-				xPlayer.Functions.RemoveItem('fishingrod', 1)
-				TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['fishingrod'], "remove")
-			else
-				TriggerClientEvent('fishing:setbait', source, "none")
-				local dolphin = xPlayer.Functions.GetItemByName('dolphin')
-				if dolphin.amount > 1 then
-					TriggerClientEvent('fishing:message', source, "~r~You cant hold more stingrays")
+			if rnd >= 90
+				TriggerClientEvent('fishing:setbait', _source, "none")
+				if delphin.count > 1 then
+					TriggerClientEvent('fishing:message', _source, "~r~You cant hold more delphins")
 				else
-					TriggerClientEvent('fishing:message', source, "You caught a delphin ")	
-					xPlayer.Functions.AddItem('delphin', 1)
-					TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['delphin'], "add")
-					TriggerClientEvent('dolphin:spawnPed', source)
+					weight = 1
+					TriggerClientEvent('fishing:message', _source, "You caught a dolphin"
+					xPlayer.addInventoryItem('dolphin', weight)
+					TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['stingray'], "add")
+					TriggerClientEvent('stingray:spawnPed', _source)
 				end
-			end
+			
 		else
-			if rnd >= 75 then
-				if fish.amount > 100 then
-					TriggerClientEvent('fishing:message', source, "~r~You cant hold more fish")
-				else
-					weight = math.random(4,9)
-					TriggerClientEvent('fishing:message', source, "You caught a ~y~fish~s~: ~g~~h~" .. weight .. "kg")
-					xPlayer.Functions.AddItem('fish', weight)
-					TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['fish'], "add")
-					TriggerClientEvent('fish:spawnPed', source)
-				end
-			else
-				if fish.amount > 100 then
-					TriggerClientEvent('fishing:message', source, "You cant hold more fish")
-				else
-					weight = math.random(2,6)
-					TriggerClientEvent('fishing:message', source, "You caught a ~y~fish~s~: ~g~~h~" .. weight .. "kg")
-					xPlayer.Functions.AddItem('fish', weight)
-					TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['fish'], "add")
-					TriggerClientEvent('fish:spawnPed', source)
-				end
-			end
+			TriggerClientEvent('fishing:setbait', _source, "none")
+			TriggerClientEvent('fishing:message', _source, "There was no stingray")
 		end
-	else
+	end
 	if bait == "dolphin" then
-			if rnd >= 82 then
-				if rnd >= 91 then
-					TriggerClientEvent('fishing:setbait', source, "none")
-					TriggerClientEvent('fishing:message', source, "~r~It was huge and it broke your fishing rod!")
-					TriggerClientEvent('fishing:break', source)
-					xPlayer.Functions.RemoveItem('fishingrod', 1)
-				else
-					if xPlayer.Functions.GetItemByName('dolphin').amount > 1  then
-						TriggerClientEvent('fishing:setbait', source, "none")
-						TriggerClientEvent('fishing:message', source, "~r~You cant hold more dolphins")
-					else
-						TriggerClientEvent('fishing:message', source, "You caught a ~y~dolphin!~s~\nThese are endangered species and are ~r~illegal~s~ to possess")
-						TriggerClientEvent('dolphin:spawnPed', source)
-						xPlayer.Functions.AddItem('dolphin', 1)
-					end
-				end
+		if rnd >= 75 then
+			TriggerClientEvent('fishing:setbait', _source, "none")
+			if stingray.count > 10 then
+				TriggerClientEvent('fishing:message', _source, "~r~You cant hold more stingray")
 			else
-				if xPlayer.Functions.GetItemByName('fish').amount > 100 then
-					TriggerClientEvent('fishing:message', source, "~r~You cant hold more fish")
-				else
-					weight = math.random(4,8)
-					TriggerClientEvent('fishing:message', source, "You caught a ~y~fish: ~g~~h~" .. weight .. "kg")
-					xPlayer.Functions.AddItem('fish', weight)
-					TriggerClientEvent('fish:spawnPed', source)
-				end
+				weight = math.random(1,2)
+				TriggerClientEvent('fishing:message', _source, "You caught a stingray")
+				xPlayer.addInventoryItem('stingray', weight)
+				TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['stingray'], "add")
+				TriggerClientEvent('stingray:spawnPed', _source)
 			end
-		end
-	else
-	if bait == "sharktiger" then
-		if rnd >= 82 then
-			if rnd >= 91 then
-				TriggerClientEvent('fishing:setbait', source, "none")
-				TriggerClientEvent('fishing:message', source, "~r~It was huge and it broke your fishing rod!")
-				TriggerClientEvent('fishing:break', source)
-				xPlayer.Functions.RemoveItem('fishingrod', 1)
-			else
-				if xPlayer.getInventoryItem('sharktiger').amount > 1  then
-					TriggerClientEvent('fishing:setbait', source, "none")
-					TriggerClientEvent('fishing:message', source, "~r~You cant hold more tiger sharks")
-				else
-					TriggerClientEvent('fishing:message', source, "You caught a ~y~tiger shark!~s~\nThese are endangered species and are ~r~illegal~s~ to possess")
-					TriggerClientEvent('sharktiger:spawnPed', source)
-					xPlayer.Functions.AddItem('sharktiger', 1)
-				end
-			end
-		else
-			if xPlayer.getInventoryItem('fish').amount > 100 then
-				TriggerClientEvent('fishing:message', source, "~r~You cant hold more fish")
-			else
-				weight = math.random(4,8)
-				TriggerClientEvent('fishing:message', source, "You caught a ~y~fish: ~g~~h~" .. weight .. "kg")
-				xPlayer.Functions.AddItem('fish', weight)
-				TriggerClientEvent('fish:spawnPed', source)
-			end
-		end
-	else
-	if bait == "sharkhammer" then
-		if rnd >= 82 then
-			if rnd >= 91 then
-				TriggerClientEvent('fishing:setbait', source, "none")
-				TriggerClientEvent('fishing:message', source, "~r~It was huge and it broke your fishing rod!")
-				TriggerClientEvent('fishing:break', source)
-				xPlayer.Functions.RemoveItem('fishingrod', 1)
-			else
-				if xPlayer.Functions.GetItemByName('sharkhammer').amount > 1  then
-					TriggerClientEvent('fishing:setbait', source, "none")
-					TriggerClientEvent('fishing:message', source, "~r~You cant hold more hammerhead sharks")
-				else
-					TriggerClientEvent('fishing:message', source, "You caught a ~y~hammerhead shark!~s~\nThese are endangered species and are ~r~illegal~s~ to possess")
-					TriggerClientEvent('sharkhammer:spawnPed', source)
-					xPlayer.Functions.AddItem('sharkhammer', 1)
-				end
-			end
-		else
-			if xPlayer.Functions.GetItemByName('fish').amount > 100 then
-				TriggerClientEvent('fishing:message', source, "~r~You cant hold more fish")
-			else
-				weight = math.random(4,8)
-				TriggerClientEvent('fishing:message', source, "You caught a ~y~fish: ~g~~h~" .. weight .. "kg")
-				xPlayer.Functions.AddItem('fish', weight)
-				TriggerClientEvent('fish:spawnPed', source)
-			end
-		end
-	else
-	if bait == "killerwhale" then
-		if rnd >= 82 then
-			if rnd >= 91 then
-				TriggerClientEvent('fishing:setbait', source, "none")
-				TriggerClientEvent('fishing:message', source, "~r~It was huge and it broke your fishing rod!")
-				TriggerClientEvent('fishing:break', source)
-				xPlayer.Functions.RemoveItem('fishingrod', 1)
-			else
-				if xPlayer.Functions.GetItemByName('killerwhale').amount > 0  then
-					TriggerClientEvent('fishing:setbait', source, "none")
-					TriggerClientEvent('fishing:message', source, "~r~You cant hold more killer whales")
-				else
-					TriggerClientEvent('fishing:message', source, "You caught a ~y~killer whale!~s~\nThese are endangered species and are ~r~illegal~s~ to possess")
-					TriggerClientEvent('killerwhale:spawnPed', source)
-					xPlayer.Functions.AddItem('killerwhale', 1)
-				end
-			end
-		else
-			if xPlayer.Functions.GetItemByName('fish').amount > 100 then
-				TriggerClientEvent('fishing:message', source, "~r~You cant hold more fish")
-			else
-				weight = math.random(4,8)
-				TriggerClientEvent('fishing:message', source, "You caught a ~y~fish: ~g~~h~" .. weight .. "kg")
-				xPlayer.Functions.AddItem('fish', weight)
-				TriggerClientEvent('fish:spawnPed', source)
-			end
-		end
-	end]]
-end)
 
+		else
+			TriggerClientEvent('fishing:setbait', _source, "none")
+			TriggerClientEvent('fishing:message', _source, "There was no stingray")
+		end
+	end
+	if bait == "sharktiger" then
+		if rnd >= 75 then
+			TriggerClientEvent('fishing:setbait', _source, "none")
+			if stingray.count > 10 then
+				TriggerClientEvent('fishing:message', _source, "~r~You cant hold more stingray")
+			else
+				weight = math.random(1,2)
+				TriggerClientEvent('fishing:message', _source, "You caught a stingray")
+				xPlayer.addInventoryItem('stingray', weight)
+				TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['stingray'], "add")
+				TriggerClientEvent('stingray:spawnPed', _source)
+			end
+
+		else
+			TriggerClientEvent('fishing:setbait', _source, "none")
+			TriggerClientEvent('fishing:message', _source, "There was no stingray")
+		end
+	end
+	if bait == "sharkhammer" then
+		if rnd >= 75 then
+			TriggerClientEvent('fishing:setbait', _source, "none")
+			if stingray.count > 10 then
+				TriggerClientEvent('fishing:message', _source, "~r~You cant hold more stingray")
+			else
+				weight = math.random(1,2)
+				TriggerClientEvent('fishing:message', _source, "You caught a stingray")
+				xPlayer.addInventoryItem('stingray', weight)
+				TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['stingray'], "add")
+				TriggerClientEvent('stingray:spawnPed', _source)
+			end
+
+		else
+			TriggerClientEvent('fishing:setbait', _source, "none")
+			TriggerClientEvent('fishing:message', _source, "There was no stingray")
+		end
+	end
+end)
 RegisterServerEvent("fishing:lowmoney")
 AddEventHandler("fishing:lowmoney", function(model)
 	local myModel = model
